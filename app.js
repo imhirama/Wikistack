@@ -21,8 +21,12 @@ app.get('/', (req,res) => {
 	res.send(layout(''));
 });
 
-
-const PORT = 1337;
+const init = async() => {
+	await db.sync()// if we need to drop tables and recreate them : {force:true}
+	const PORT = 1337;
 	app.listen(PORT, ()=> {
 	console.log(`App listening in port ${PORT}`);
-});
+	})
+};
+
+init();
