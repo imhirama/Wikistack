@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 // Modules we created
 const layout = require('./views/layout')
 const { db, Page, User } = require('./models');
+const wikiRouter = require('./routes/wiki')
+const userRouter = require('./routes/user')
+
 
 db.authenticate().
 then(() => {
@@ -15,10 +18,12 @@ then(() => {
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use('/wiki', wikiRouter)
+app.use('/user', userRouter)
 
 
 app.get('/', (req,res) => {
-	res.send(layout(''));
+	res.redirect('/wiki');
 });
 
 const init = async() => {
